@@ -1,0 +1,20 @@
+{
+  "name": "shadow-reign-gamerkie-3d",
+  "version": "3.0.0",
+  "description": "Shadow Reign 3D &#8212; GamerKie Mobile & Browser 3D Action RPG",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "test": "node tests/game-data.test.js && node tests/combat.test.js && node tests/mobile-presentation.test.js"
+  },
+  "keywords": [
+    "gamerkie",
+    "shadow-reign",
+    "3d",
+    "threejs",
+    "webgl",
+    "mobile-game"
+  ],
+  "author": "GamerKie",
+  "license": "PROPRIETARY"
+}
