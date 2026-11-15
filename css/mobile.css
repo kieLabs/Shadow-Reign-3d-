@@ -1,0 +1,123 @@
+.mobile-controls {
+  position: absolute;
+  inset: auto 0 18px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 22px;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.joystick-zone {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.joystick-base {
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,92,246,0.22) 0%, rgba(15,23,42,0.75) 100%);
+  border: 2px solid rgba(139, 92, 246, 0.55);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+
+.joystick-stick {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.7);
+  transform: translate(0px, 0px);
+  pointer-events: none;
+}
+
+.joystick-hint {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: rgba(226, 232, 240, 0.7);
+}
+
+.action-pad {
+  pointer-events: auto;
+  position: relative;
+  width: 210px;
+  height: 175px;
+}
+
+.touch-btn {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.74rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  touch-action: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+}
+
+.touch-btn:active {
+  transform: scale(0.92);
+  filter: brightness(1.2);
+}
+
+.btn-attack {
+  width: 78px;
+  height: 78px;
+  right: 6px;
+  bottom: 8px;
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  font-size: 0.85rem;
+}
+
+.btn-heavy {
+  width: 58px;
+  height: 58px;
+  right: 92px;
+  bottom: 14px;
+  background: linear-gradient(135deg, #f59e0b, #b45309);
+}
+
+.btn-dodge {
+  width: 56px;
+  height: 56px;
+  right: 84px;
+  bottom: 82px;
+  background: linear-gradient(135deg, #06b6d4, #0369a1);
+}
+
+.btn-block {
+  width: 56px;
+  height: 56px;
+  right: 14px;
+  bottom: 96px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.btn-ult {
+  width: 62px;
+  height: 62px;
+  right: 144px;
+  bottom: 58px;
+  background: linear-gradient(135deg, #a855f7, #6d28d9);
+  border-color: #f0abfc;
+}
+
+@media (max-width: 768px) {
+  .pc-controls-hint { display: none; }
+  .hud-center-panel { display: none; }
+  .hud-player-panel { min-width: 185px; padding: 8px 10px; }
+}
