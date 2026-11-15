@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#07080d" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Shadow Reign 3D — GamerKie Edition</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/menu.css" />
+  <link rel="stylesheet" href="css/gameplay.css" />
+  <link rel="stylesheet" href="css/mobile.css" />
+  <!-- Three.js 3D WebGL Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="state-menu">
+  <div id="app-shell">
+    <!-- 3D WebGL Viewport -->
+    <div id="webgl-container" aria-label="3D Game Viewport"></div>
+
+    <!-- Screen-Space 3D Floating Damage & Indicators Layer -->
+    <div id="fx-overlay"></div>
+
+    <!-- Main Menu Screen -->
+    <section id="menu-screen" class="screen active">
+      <div class="menu-card">
+        <div class="brand-badge">GAMERKIE 3D WEBGL EDITION</div>
+        <h1 class="game-title">SHADOW REIGN <span>3D</span></h1>
+        <p class="game-tagline">3D Hack &amp; Slash Arena • Real-Time Shadows • Mobile Touch Fixed</p>
+
+        <div class="section-label">SELECT YOUR 3D WARRIOR</div>
+        <div id="character-grid" class="character-grid"></div>
+
+        <div class="section-label">SELECT 3D ARENA / CHAPTER</div>
+        <div id="level-grid" class="level-grid"></div>
+
+        <div class="menu-actions">
+          <button id="btn-start-game" class="btn-glow primary">⚔ ENTER 3D ARENA</button>
+          <button id="btn-story-modal" class="btn-glow secondary">📜 LORE &amp; MISSIONS</button>
+          <button id="btn-reset-save" class="btn-glow subtle">↺ RESET SAVE</button>
+        </div>
+
+        <div id="save-summary" class="save-summary"></div>
+      </div>
+    </section>
+
+    <!-- Story & Missions Modal -->
+    <section id="story-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>CHRONICLES OF THE SHADOW REIGN (3D)</h2>
+        <div id="story-text-container"></div>
+        <h3>ACTIVE MISSIONS</h3>
+        <div id="mission-list-container"></div>
+        <button id="btn-close-story" class="btn-glow primary">CLOSE</button>
+      </div>
+    </section>
+
+    <!-- In-Game 3D HUD -->
+    <section id="hud-screen" class="screen">
+      <header class="hud-top">
+        <div class="hud-player-panel">
+          <div class="hud-row">
+            <span id="hud-hero-name" class="hud-name">Kuro — Shadow Blade</span>
+            <span id="hud-combo" class="hud-combo">0 HIT</span>
+          </div>
+          <div class="bar-track hp-track">
+            <div id="hud-hp-fill" class="bar-fill hp-fill" style="width:100%"></div>
+            <span id="hud-hp-text" class="bar-label">120 / 120</span>
+          </div>
+          <div class="bar-track energy-track">
+            <div id="hud-energy-fill" class="bar-fill energy-fill" style="width:100%"></div>
+            <span id="hud-energy-text" class="bar-label">SPECIAL READY</span>
+          </div>
+        </div>
+
+        <div class="hud-center-panel">
+          <div id="hud-arena-title" class="hud-arena-title">Chapter 1: Bamboo Shrine</div>
+          <div id="hud-wave-status" class="hud-wave-status">Wave 1 / 3</div>
+          <div id="hud-mission-ticker" class="hud-mission-ticker">Mission: Defeat all shadow forces</div>
+        </div>
+
+        <div class="hud-System-controls">
+          <button id="btn-camera-mode" class="hud-icon-btn" title="Switch 3D Camera Angle">🎥 CAM: CHASE</button>
+          <button id="btn-audio-toggle" class="hud-icon-btn" title="Toggle Synth Audio">🔊 SFX: ON</button>
+          <button id="btn-pause-game" class="hud-icon-btn" title="Pause Game">⏸ PAUSE</button>
+        </div>
+      </header>
+
+      <!-- 3D Boss Health Bar Overlay -->
+      <div id="boss-hud" class="boss-hud hidden">
+        <div class="boss-title-row">
+          <span id="boss-name-label">Kurogane the Oni Warlord</span>
+          <span id="boss-phase-badge">PHASE 1</span>
+        </div>
+        <div class="bar-track boss-hp-track">
+          <div id="boss-hp-fill" class="bar-fill boss-hp-fill" style="width:100%"></div>
+        </div>
+      </div>
+
+      <!-- Mobile Multi-Touch Virtual Controls (Auto-Enabled on Touch & Mobile Viewport) -->
+      <div id="mobile-controls" class="mobile-controls">
+        <div id="joystick-zone" class="joystick-zone">
+          <div id="joystick-base" class="joystick-base">
+            <div id="joystick-stick" class="joystick-stick"></div>
+          </div>
+          <span class="joystick-hint">360° 3D MOVE</span>
+        </div>
+
+        <div class="action-pad">
+          <button id="btn-touch-special" class="touch-btn btn-ult">ULT</button>
+          <button id="btn-touch-heavy" class="touch-btn btn-heavy">HEAVY</button>
+          <button id="btn-touch-dodge" class="touch-btn btn-dodge">DODGE</button>
+          <button id="btn-touch-block" class="touch-btn btn-block">BLOCK</button>
+          <button id="btn-touch-attack" class="touch-btn btn-attack">SLASH</button>
+        </div>
+      </div>
+
+      <footer class="pc-controls-hint">
+        <span><b>WASD / Arrows</b>: 3D Move</span>
+        <span><b>J / Click</b>: Slash</span>
+        <span><b>K</b>: Heavy</span>
+        <span><b>L / Shift</b>: Dodge</span>
+        <span><b>Space</b>: Parry/Block</span>
+        <span><b>U / E</b>: 3D Ultimate</span>
+      </footer>
+    </section>
+
+    <!-- Pause / Victory / Defeat Overlay -->
+    <section id="result-modal" class="modal hidden">
+      <div class="modal-content result-card">
+        <h2 id="result-title">VICTORY</h2>
+        <p id="result-subtitle">You conquered the 3D Arena!</p>
+        <div id="result-stats" class="result-stats"></div>
+        <div class="menu-actions">
+          <button id="btn-next-level" class="btn-glow primary">▶ NEXT 3D ARENA</button>
+          <button id="btn-retry-level" class="btn-glow secondary">↻ RETRY</button>
+          <button id="btn-back-menu" class="btn-glow subtle">🏠 MAIN MENU</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 16 Modular 3D Game Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/device.js"></script>
+  <script src="js/save.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/story.js"></script>
+  <script src="js/missions.js"></script>
+  <script src="js/characters.js"></script>
+  <script src="js/enemies.js"></script>
+  <script src="js/bosses.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/combat.js"></script>
+  <script src="js/controls.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
